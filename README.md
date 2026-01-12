@@ -19,7 +19,7 @@ A Chrome extension that adds an interactive world map to BambooHR's employee dir
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/bamboo-employee-map.git
+   git clone https://github.com/msimulcik/bamboo-employee-map.git
    ```
 
 2. Open Chrome and navigate to `chrome://extensions/`
