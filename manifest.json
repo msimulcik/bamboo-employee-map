@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "BambooHR Employee Map",
+  "version": "1.0.1",
+  "description": "Interactive world map showing employee locations on BambooHR directory page",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.bamboohr.com/employees/directory.php*"],
+      "js": ["lib/d3.min.js", "lib/topojson.min.js", "src/geocoder.js", "src/map.js", "src/popup.js", "src/content.js"],
+      "css": ["src/styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["data/world-110m.json", "data/cities.json"],
+      "matches": ["*://*.bamboohr.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": []
+}
+

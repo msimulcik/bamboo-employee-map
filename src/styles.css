@@ -1,0 +1,632 @@
+/**
+ * BambooHR Employee Map - Styles
+ * Minimalistic design with clean aesthetics
+ */
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+:root {
+  --bamboo-map-bg: #f8fafc;
+  --bamboo-map-border: #e2e8f0;
+  --bamboo-map-land: #e8ecf1;
+  --bamboo-map-land-stroke: #cbd5e1;
+  --bamboo-map-water: #f1f5f9;
+  --bamboo-map-pin: #059669;
+  --bamboo-map-pin-hover: #047857;
+  --bamboo-map-pin-text: #ffffff;
+  --bamboo-map-text: #1e293b;
+  --bamboo-map-text-muted: #64748b;
+  --bamboo-map-header-bg: #ffffff;
+  --bamboo-map-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --bamboo-map-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --bamboo-map-radius: 8px;
+  --bamboo-map-transition: 0.2s ease;
+}
+
+/* ============================================
+   Map Wrapper & Container
+   ============================================ */
+.bamboo-map-wrapper {
+  margin: 0 0 24px 0;
+  border-radius: var(--bamboo-map-radius);
+  border: 1px solid var(--bamboo-map-border);
+  background: var(--bamboo-map-header-bg);
+  box-shadow: var(--bamboo-map-shadow);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.bamboo-map-container {
+  position: relative;
+  background: var(--bamboo-map-water);
+  overflow: hidden;
+  transition: height var(--bamboo-map-transition), opacity var(--bamboo-map-transition);
+}
+
+.bamboo-map-wrapper.bamboo-map-collapsed .bamboo-map-container {
+  height: 0 !important;
+  opacity: 0;
+}
+
+/* ============================================
+   Map Header
+   ============================================ */
+.bamboo-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bamboo-map-header-bg);
+  border-bottom: 1px solid var(--bamboo-map-border);
+  cursor: default;
+}
+
+.bamboo-map-wrapper.bamboo-map-collapsed .bamboo-map-header {
+  border-bottom: none;
+}
+
+.bamboo-map-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bamboo-filter-placeholder {
+  display: flex;
+  align-items: center;
+}
+
+.bamboo-map-icon {
+  color: var(--bamboo-map-pin);
+}
+
+.bamboo-map-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-map-stats {
+  font-size: 12px;
+  color: var(--bamboo-map-text-muted);
+  margin-left: 8px;
+}
+
+.bamboo-map-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--bamboo-map-text-muted);
+  cursor: pointer;
+  transition: background var(--bamboo-map-transition), color var(--bamboo-map-transition);
+}
+
+.bamboo-map-toggle:hover {
+  background: var(--bamboo-map-bg);
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-map-toggle-icon {
+  transition: transform var(--bamboo-map-transition);
+}
+
+.bamboo-map-wrapper.bamboo-map-collapsed .bamboo-map-toggle-icon {
+  transform: rotate(-90deg);
+}
+
+/* ============================================
+   SVG Map Styling
+   ============================================ */
+.bamboo-map-svg {
+  display: block;
+  width: 100%;
+  cursor: grab;
+}
+
+.bamboo-map-svg:active {
+  cursor: grabbing;
+}
+
+.bamboo-map-background {
+  fill: var(--bamboo-map-water);
+}
+
+.bamboo-country {
+  fill: var(--bamboo-map-land);
+  stroke: var(--bamboo-map-land-stroke);
+  stroke-width: 0.5;
+  transition: fill 0.15s ease;
+}
+
+.bamboo-country:hover {
+  fill: #dde4ed;
+}
+
+.bamboo-country-border {
+  fill: none;
+  stroke: var(--bamboo-map-land-stroke);
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+/* ============================================
+   Map Pins
+   ============================================ */
+.bamboo-pin {
+  fill: var(--bamboo-map-pin);
+  stroke: #ffffff;
+  stroke-width: 2;
+  cursor: pointer;
+  transition: fill 0.15s ease;
+}
+
+.bamboo-pin-group:hover .bamboo-pin {
+  fill: var(--bamboo-map-pin-hover);
+}
+
+.bamboo-pin-label {
+  fill: var(--bamboo-map-pin-text);
+  font-size: 10px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================
+   Map Filters
+   ============================================ */
+.bamboo-filter-wrapper {
+  position: relative;
+}
+
+.bamboo-filter-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--bamboo-map-border);
+  border-radius: 6px;
+  background: var(--bamboo-map-bg);
+  color: var(--bamboo-map-text-muted);
+  cursor: pointer;
+  transition: background var(--bamboo-map-transition), color var(--bamboo-map-transition);
+}
+
+.bamboo-filter-toggle:hover {
+  background: var(--bamboo-map-border);
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-filter-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.bamboo-filter-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--bamboo-map-pin);
+  border-radius: 8px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.bamboo-filter-popup {
+  position: fixed;
+  width: 240px;
+  background: var(--bamboo-map-header-bg);
+  border-radius: var(--bamboo-map-radius);
+  box-shadow: var(--bamboo-map-shadow-lg);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.bamboo-filter-popup-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.bamboo-filter-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--bamboo-map-border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-filter-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--bamboo-map-text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background var(--bamboo-map-transition), color var(--bamboo-map-transition);
+}
+
+.bamboo-filter-close:hover {
+  background: var(--bamboo-map-bg);
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-filter-body {
+  padding: 12px;
+}
+
+.bamboo-filter-row {
+  margin-bottom: 8px;
+}
+
+.bamboo-filter-input,
+.bamboo-filter-select {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid var(--bamboo-map-border);
+  border-radius: 4px;
+  background: var(--bamboo-map-header-bg);
+  color: var(--bamboo-map-text);
+  outline: none;
+  transition: border-color var(--bamboo-map-transition);
+  box-sizing: border-box;
+}
+
+.bamboo-filter-input:focus,
+.bamboo-filter-select:focus {
+  border-color: var(--bamboo-map-pin);
+}
+
+.bamboo-filter-input::placeholder {
+  color: var(--bamboo-map-text-muted);
+}
+
+.bamboo-filter-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}
+
+.bamboo-filter-reset {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid var(--bamboo-map-border);
+  border-radius: 4px;
+  background: var(--bamboo-map-bg);
+  color: var(--bamboo-map-text-muted);
+  cursor: pointer;
+  transition: background var(--bamboo-map-transition), color var(--bamboo-map-transition);
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+
+.bamboo-filter-reset:hover {
+  background: var(--bamboo-map-border);
+  color: var(--bamboo-map-text);
+}
+
+/* ============================================
+   Map Controls
+   ============================================ */
+.bamboo-map-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+
+.bamboo-map-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--bamboo-map-border);
+  border-radius: 6px;
+  background: var(--bamboo-map-header-bg);
+  color: var(--bamboo-map-text);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--bamboo-map-shadow);
+  transition: background var(--bamboo-map-transition), border-color var(--bamboo-map-transition);
+}
+
+.bamboo-map-btn:hover {
+  background: var(--bamboo-map-bg);
+  border-color: var(--bamboo-map-text-muted);
+}
+
+.bamboo-map-btn:active {
+  background: var(--bamboo-map-border);
+}
+
+/* ============================================
+   Tooltip
+   ============================================ */
+.bamboo-map-tooltip {
+  position: fixed;
+  padding: 8px 12px;
+  background: var(--bamboo-map-text);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.4;
+  border-radius: 6px;
+  box-shadow: var(--bamboo-map-shadow-lg);
+  pointer-events: none;
+  z-index: 1000;
+  display: none;
+  max-width: 200px;
+}
+
+.bamboo-map-tooltip strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ============================================
+   Employee Popup
+   ============================================ */
+.bamboo-popup {
+  position: fixed;
+  width: 320px;
+  max-height: 400px;
+  background: var(--bamboo-map-header-bg);
+  border-radius: var(--bamboo-map-radius);
+  box-shadow: var(--bamboo-map-shadow-lg);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.bamboo-popup.bamboo-popup-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.bamboo-popup-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--bamboo-map-border);
+  background: var(--bamboo-map-bg);
+}
+
+.bamboo-popup-title {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-popup-count {
+  font-size: 12px;
+  color: var(--bamboo-map-text-muted);
+  margin-right: 12px;
+}
+
+.bamboo-popup-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--bamboo-map-text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--bamboo-map-transition), color var(--bamboo-map-transition);
+}
+
+.bamboo-popup-close:hover {
+  background: var(--bamboo-map-border);
+  color: var(--bamboo-map-text);
+}
+
+.bamboo-popup-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.bamboo-popup-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ============================================
+   Employee List Item
+   ============================================ */
+.bamboo-popup-employee {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+}
+
+.bamboo-popup-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.bamboo-popup-avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bamboo-popup-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.bamboo-initials-text {
+  position: relative;
+  z-index: 1;
+}
+
+.bamboo-popup-employee-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bamboo-popup-employee-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bamboo-map-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bamboo-popup-employee-title {
+  font-size: 12px;
+  color: var(--bamboo-map-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.bamboo-popup-employee-dept {
+  font-size: 11px;
+  color: var(--bamboo-map-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+  opacity: 0.8;
+}
+
+/* ============================================
+   Loading & Error States
+   ============================================ */
+.bamboo-map-loading,
+.bamboo-map-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--bamboo-map-water);
+  color: var(--bamboo-map-text-muted);
+  font-size: 14px;
+}
+
+.bamboo-map-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--bamboo-map-border);
+  border-top-color: var(--bamboo-map-pin);
+  border-radius: 50%;
+  animation: bamboo-spin 0.8s linear infinite;
+}
+
+@keyframes bamboo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bamboo-map-error {
+  color: #dc2626;
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+.bamboo-popup-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bamboo-popup-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bamboo-popup-content::-webkit-scrollbar-thumb {
+  background: var(--bamboo-map-border);
+  border-radius: 3px;
+}
+
+.bamboo-popup-content::-webkit-scrollbar-thumb:hover {
+  background: var(--bamboo-map-text-muted);
+}
+
+/* ============================================
+   Responsive Adjustments
+   ============================================ */
+@media (max-width: 768px) {
+  .bamboo-popup {
+    width: 280px;
+    max-height: 350px;
+  }
+  
+  .bamboo-map-stats {
+    display: none;
+  }
+}
+
