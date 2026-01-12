@@ -17,7 +17,7 @@ A Chrome extension that adds an interactive world map to BambooHR's employee dir
 
 ### From Source (Developer Mode)
 
-1. Download and and pack [the code](https://github.com/msimulcik/bamboo-employee-map/archive/refs/heads/main.zip) or clone this repository:
+1. Download and and unpack [the code](https://github.com/msimulcik/bamboo-employee-map/archive/refs/heads/main.zip) or clone this repository:
    ```bash
    git clone https://github.com/msimulcik/bamboo-employee-map.git
    ```
